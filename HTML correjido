@@ -1,0 +1,1104 @@
+HTML MODIFICADO CON LAS RESPECTIVAS CORRECCIONES
+<!doctype html>
+<html lang="es" class="pos-root">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POS Campus Sales UPTC</title>
+    <meta name="description" content="Librería y punto de venta universitario del campus UPTC con catálogo de libros académicos impresos y digitales." />
+    <meta property="og:title" content="POS Campus Sales UPTC" />
+    <meta property="og:description" content="Librería y punto de venta universitario del campus UPTC con catálogo de libros académicos impresos y digitales." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <style>
+      /* ==========================================================================
+         REGLAS CSS CON CLASES PREFIJADAS (.pos-*) Y CONTRASTE WCAG AA (>= 4.5:1)
+         ========================================================================== */
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      .pos-root {
+        scroll-behavior: smooth;
+        font-family: 'Georgia', 'Times New Roman', serif;
+        background-color: #faf9f5;
+        color: #18181b;
+        line-height: 1.6;
+      }
+
+      .pos-body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+
+      /* Franja superior institucional / Promoción (#facc15 sobre #18181b -> 11.4:1) */
+      .pos-promo-banner {
+        background-color: #18181b;
+        color: #facc15;
+        text-align: center;
+        padding: 0.55rem 1rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        border-bottom: 2px solid #eab308;
+      }
+
+      /* 1. Encabezado con el nombre de la librería y menú de navegación */
+      .pos-header {
+        background-color: #ffffff;
+        border-bottom: 1px solid rgba(24, 24, 27, 0.12);
+        padding: 1.1rem 5%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .pos-brand {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #18181b;
+        text-decoration: none;
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+      }
+
+      .pos-nav {
+        display: flex;
+        align-items: center;
+        gap: 2.25rem;
+      }
+
+      /* #3f3f46 sobre #ffffff -> 10.3:1 (WCAG AAA) */
+      .pos-nav-link {
+        text-decoration: none;
+        color: #3f3f46;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: color 150ms cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        padding: 0.25rem 0;
+        white-space: nowrap;
+      }
+
+      .pos-nav-link:hover,
+      .pos-nav-link:focus-visible {
+        color: #18181b;
+      }
+
+      .pos-nav-link::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #854d0e;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .pos-nav-link:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+
+      /* Botón de estado del Carrito POS en el encabezado (#ffffff sobre #18181b -> 17.7:1) */
+      .pos-cart-btn {
+        background-color: #18181b;
+        color: #ffffff;
+        border: 1px solid #18181b;
+        padding: 0.55rem 1.1rem;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+        transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1), opacity 150ms ease;
+      }
+
+      .pos-cart-btn:hover {
+        opacity: 0.92;
+        transform: translateY(-1px);
+      }
+
+      /* #18181b sobre #facc15 -> 11.4:1 */
+      .pos-cart-badge {
+        background-color: #facc15;
+        color: #18181b;
+        padding: 0.1rem 0.45rem;
+        border-radius: 4px;
+        font-weight: 700;
+        font-size: 0.8rem;
+      }
+
+      /* Contenedor principal */
+      .pos-main {
+        flex: 1;
+        width: 100%;
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 0 5%;
+      }
+
+      /* Defensa CSS: cualquier elemento inyectado en main sin clase autorizada (.pos-*) no altera el layout */
+      .pos-main > :not([class^="pos-"]):not([class*=" pos-"]) {
+        display: none !important;
+      }
+
+      /* 2. Hero Section */
+      .pos-hero {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 3.5rem;
+        align-items: center;
+        padding: 4.5rem 0 4rem 0;
+        border-bottom: 1px solid rgba(24, 24, 27, 0.1);
+      }
+
+      /* #78350f sobre #faf9f5 -> 8.1:1 (WCAG AAA) */
+      .pos-hero-kicker {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #78350f;
+        font-weight: 700;
+        margin-bottom: 0.85rem;
+      }
+
+      .pos-hero-title {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        font-size: clamp(2.1rem, 3.8vw, 3.1rem);
+        line-height: 1.12;
+        color: #18181b;
+        margin-bottom: 1.25rem;
+        text-wrap: balance;
+      }
+
+      /* #3f3f46 sobre #faf9f5 -> 9.8:1 */
+      .pos-hero-desc {
+        font-size: 1.05rem;
+        color: #3f3f46;
+        max-width: 62ch;
+        margin-bottom: 2rem;
+        line-height: 1.65;
+      }
+
+      /* Botón de Ver Catálogo e indicadores en Hero */
+      .pos-hero-actions {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+      }
+
+      /* #ffffff sobre #854d0e -> 6.8:1 (WCAG AA superado; antes #ca8a04 daba 2.9:1) */
+      .pos-cta-btn {
+        display: inline-block;
+        background-color: #854d0e;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 0.85rem 1.75rem;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1), background-color 150ms ease;
+        white-space: nowrap;
+      }
+
+      .pos-cta-btn:hover {
+        background-color: #713f12;
+        transform: translateY(-2px);
+      }
+
+      /* #52525b sobre #faf9f5 -> 7.1:1 (antes #71717a daba 4.4:1) */
+      .pos-hero-note {
+        font-size: 0.85rem;
+        color: #52525b;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .pos-hero-figure {
+        position: relative;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #f4f4f0;
+        border: 1px solid rgba(24, 24, 27, 0.1);
+        aspect-ratio: 4 / 3;
+      }
+
+      .pos-hero-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* #fafafa sobre fondo oscuro rgba(24,24,27,0.92) -> > 12:1 */
+      .pos-hero-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(24, 24, 27, 0.95) 0%, rgba(24, 24, 27, 0.78) 65%, transparent 100%);
+        color: #fafafa;
+        padding: 2.25rem 1.25rem 1rem;
+        font-size: 0.82rem;
+        letter-spacing: 0.01em;
+      }
+
+      /* 3. Sección de Libros Destacados y 6. Pestañas Interactivas (Tabs) */
+      .pos-catalog {
+        padding: 4rem 0 5rem 0;
+      }
+
+      .pos-catalog-header {
+        padding: 0 0 2.5rem 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 1.5rem;
+      }
+
+      .pos-catalog-title {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        font-size: 2rem;
+        color: #18181b;
+        margin-bottom: 0.35rem;
+        text-wrap: balance;
+      }
+
+      .pos-catalog-subtitle {
+        color: #3f3f46;
+        font-size: 0.95rem;
+      }
+
+      /* Contenedor de Pestañas (Tabs) para Impresos vs Digitales */
+      .pos-tablist {
+        display: inline-flex;
+        background-color: #e4e4e7;
+        padding: 0.3rem;
+        border-radius: 8px;
+        gap: 0.25rem;
+      }
+
+      /* #3f3f46 sobre #e4e4e7 -> 8.1:1 (antes #52525b sobre #e4e4e7 daba 5.8:1) */
+      .pos-tab {
+        appearance: none;
+        border: none;
+        background: transparent;
+        color: #3f3f46;
+        padding: 0.55rem 1.15rem;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1), opacity 150ms ease;
+      }
+
+      .pos-tab[aria-selected="true"] {
+        background-color: #ffffff;
+        color: #18181b;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .pos-tab:hover:not([aria-selected="true"]) {
+        color: #18181b;
+      }
+
+      /* Barra informativa de modalidad activa (#3f3f46 sobre #faf9f5 -> 9.8:1) */
+      .pos-tab-status {
+        font-size: 0.85rem;
+        color: #3f3f46;
+        margin-bottom: 1.75rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid rgba(24, 24, 27, 0.08);
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* Grilla de 3 Tarjetas de Libros Destacados */
+      .pos-book-grid {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+
+      .pos-book-item {
+        display: flex;
+      }
+
+      .pos-book-card {
+        background-color: #ffffff;
+        border: 1px solid rgba(24, 24, 27, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .pos-book-card:hover {
+        transform: translateY(-3px);
+      }
+
+      .pos-book-figure {
+        aspect-ratio: 4 / 3;
+        background-color: #f4f4f0;
+        overflow: hidden;
+        border-bottom: 1px solid rgba(24, 24, 27, 0.08);
+        position: relative;
+      }
+
+      .pos-book-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .pos-book-card:hover .pos-book-img {
+        transform: scale(1.03);
+      }
+
+      .pos-book-body {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      /* Metadatos limpios: #52525b sobre #ffffff -> 7.5:1 (antes #71717a daba 4.6:1) */
+      .pos-book-meta {
+        font-size: 0.78rem;
+        color: #52525b;
+        margin-bottom: 0.45rem;
+        display: block;
+      }
+
+      .pos-book-title {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        font-size: 1.2rem;
+        color: #18181b;
+        margin-bottom: 0.65rem;
+        line-height: 1.3;
+      }
+
+      .pos-book-desc {
+        font-size: 0.92rem;
+        color: #3f3f46;
+        margin-bottom: 1.5rem;
+        flex: 1;
+      }
+
+      /* Pie de tarjeta: Precio tabular y Botón Agregar al Carrito */
+      .pos-book-footer {
+        background: transparent;
+        border-top: 1px solid rgba(24, 24, 27, 0.1);
+        padding: 1.1rem 0 0 0;
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .pos-book-price {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #18181b;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* #52525b sobre #ffffff -> 7.5:1 */
+      .pos-book-format {
+        display: block;
+        font-size: 0.72rem;
+        font-weight: 500;
+        color: #52525b;
+      }
+
+      /* #ffffff sobre #18181b -> 17.7:1; hover #ffffff sobre #854d0e -> 6.8:1 */
+      .pos-add-btn {
+        background-color: #18181b;
+        color: #ffffff;
+        border: none;
+        padding: 0.6rem 1.1rem;
+        border-radius: 6px;
+        font-size: 0.84rem;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1), background-color 150ms ease;
+      }
+
+      .pos-add-btn:hover {
+        background-color: #854d0e;
+        transform: translateY(-1px);
+      }
+
+      /* Resumen interactivo de terminal POS (Dialog nativo HTML) */
+      .pos-modal {
+        margin: auto;
+        padding: 2rem;
+        border: 1px solid rgba(24, 24, 27, 0.2);
+        border-radius: 10px;
+        background-color: #ffffff;
+        color: #18181b;
+        max-width: 480px;
+        width: 92%;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+      }
+
+      .pos-modal::backdrop {
+        background-color: rgba(24, 24, 27, 0.6);
+      }
+
+      .pos-modal-title {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        font-size: 1.35rem;
+        color: #18181b;
+        margin-bottom: 0.5rem;
+      }
+
+      .pos-modal-desc {
+        font-size: 0.9rem;
+        color: #3f3f46;
+        margin-bottom: 1.25rem;
+      }
+
+      .pos-modal-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1.25rem;
+        font-size: 0.88rem;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .pos-modal-th,
+      .pos-modal-td {
+        text-align: left;
+        padding: 0.55rem 0.25rem;
+        border-bottom: 1px solid rgba(24, 24, 27, 0.1);
+        color: #18181b;
+      }
+
+      .pos-modal-th-right,
+      .pos-modal-td-right {
+        text-align: right;
+      }
+
+      .pos-modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        list-style: none;
+      }
+
+      .pos-modal-btn {
+        padding: 0.55rem 1rem;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid #3f3f46;
+        background: #ffffff;
+        color: #18181b;
+      }
+
+      /* #ffffff sobre #854d0e -> 6.8:1 (WCAG AA) */
+      .pos-modal-btn-primary {
+        background: #854d0e;
+        color: #ffffff;
+        border-color: #854d0e;
+      }
+
+      .pos-modal-btn-primary:hover {
+        background: #713f12;
+      }
+
+      /* 4. Footer con datos de contacto */
+      .pos-footer {
+        background-color: #18181b;
+        color: #f4f4f5;
+        padding: 3.5rem 5% 2.5rem;
+        margin-top: auto;
+        border-top: 3px solid #eab308;
+      }
+
+      .pos-footer-grid {
+        max-width: 1240px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1fr;
+        gap: 2.5rem;
+        padding-bottom: 2.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      /* #facc15 sobre #18181b -> 11.4:1 */
+      .pos-footer-heading {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        color: #facc15;
+        font-size: 1.1rem;
+        margin-bottom: 0.85rem;
+      }
+
+      /* #d4d4d8 sobre #18181b -> 11.9:1 */
+      .pos-footer-text,
+      .pos-footer-address {
+        font-style: normal;
+        font-size: 0.9rem;
+        color: #d4d4d8;
+        line-height: 1.7;
+      }
+
+      .pos-footer-link {
+        color: #ffffff;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      .pos-footer-legal {
+        max-width: 1240px;
+        margin: 1.75rem auto 0;
+        font-size: 0.82rem;
+        color: #d4d4d8;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      /* Adaptabilidad Responsiva usando clases .pos-* */
+      @media (max-width: 900px) {
+        .pos-hero {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          padding: 3rem 0;
+        }
+
+        .pos-book-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .pos-footer-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .pos-header {
+          flex-wrap: wrap;
+          gap: 0.75rem;
+        }
+
+        .pos-nav {
+          gap: 1.25rem;
+          order: 3;
+          width: 100%;
+          justify-content: center;
+          padding-top: 0.5rem;
+          border-top: 1px solid rgba(24, 24, 27, 0.08);
+        }
+
+        .pos-book-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body class="pos-body">
+    <!-- Banner superior poblado mediante textContent en DOM -->
+    <aside id="banner-promocion" class="pos-promo-banner"></aside>
+
+    <!-- 1. Encabezado con el nombre de la librería y el menú de navegación (inicio, libros, contactos) -->
+    <header class="pos-header">
+      <a href="#inicio" class="pos-brand">POS Campus Sales UPTC</a>
+      <nav aria-label="Navegación principal" class="pos-nav">
+        <a href="#inicio" class="pos-nav-link">Inicio</a>
+        <a href="#libros" class="pos-nav-link">Libros</a>
+        <a href="#contactos" class="pos-nav-link">Contactos</a>
+      </nav>
+      <button type="button" id="btn-ver-carrito" class="pos-cart-btn" aria-label="Abrir resumen del punto de venta">
+        <span>Terminal POS</span>
+        <output id="contador-carrito" class="pos-cart-badge">0</output>
+      </button>
+    </header>
+
+    <main class="pos-main">
+      <!-- 2. Hero Section: título de la librería, descripción llamativa y botón de ver catálogo -->
+      <section id="inicio" class="pos-hero">
+        <div>
+          <hgroup>
+            <p class="pos-hero-kicker">Universidad Pedagógica y Tecnológica de Colombia · Tunja</p>
+            <h1 class="pos-hero-title">POS Campus Sales: Librería Académica y Punto de Venta UPTC</h1>
+          </hgroup>
+          <p class="pos-hero-desc">
+            Encuentra textos de investigación, literatura científica, manuales de ingeniería y publicaciones editoriales oficiales de nuestra alma máter. Adquiere tus ejemplares en formato físico en sede central o descarga licencias digitales al instante desde el sistema POS universitario.
+          </p>
+          <menu class="pos-hero-actions">
+            <li><a href="#libros" class="pos-cta-btn">Ver catálogo</a></li>
+            <li><small class="pos-hero-note">Atención presencial en Edificio Administrativo · Entrega inmediata</small></li>
+          </menu>
+        </div>
+        <figure class="pos-hero-figure">
+          <img
+            src="https://placehold.co/800x600/18181b/facc15?text=Libreria+Campus+UPTC"
+            alt="Exhibición editorial de libros académicos en el punto de venta del campus UPTC"
+            referrerpolicy="no-referrer"
+            class="pos-hero-img"
+          />
+          <figcaption class="pos-hero-caption">
+            Sede Central Tunja · Punto de venta oficial del Fondo Editorial Universitario UPTC.
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- 3. Sección de libros destacados con 3 tarjetas y 6. Pestañas interactivas (Tabs) -->
+      <section id="libros" class="pos-catalog">
+        <header class="pos-catalog-header">
+          <div>
+            <h2 class="pos-catalog-title">Libros Académicos Destacados</h2>
+            <p class="pos-catalog-subtitle">Selecciona la modalidad de edición para actualizar las tarifas del punto de venta en tiempo real.</p>
+          </div>
+
+          <!-- 6. Pestañas interactivas (Tabs) para alternar entre precios impresos y digitales -->
+          <div role="tablist" aria-label="Modalidad de formato de libros" class="pos-tablist">
+            <button
+              type="button"
+              role="tab"
+              id="tab-impreso"
+              class="pos-tab"
+              aria-selected="true"
+              data-formato="impreso"
+            >
+              Libros Impresos
+            </button>
+            <button
+              type="button"
+              role="tab"
+              id="tab-digital"
+              class="pos-tab"
+              aria-selected="false"
+              data-formato="digital"
+            >
+              Libros Digitales (eBook)
+            </button>
+          </div>
+        </header>
+
+        <p id="estado-pestana" class="pos-tab-status">
+          Mostrando tarifas de Edición Impresa (Empastado rústico editorial · Retiro inmediato en caja POS UPTC).
+        </p>
+
+        <ul class="pos-book-grid">
+          <!-- Tarjeta 1 -->
+          <li class="pos-book-item">
+            <article
+              class="pos-book-card"
+              data-titulo="Cálculo Multivariable y Análisis Vectorial"
+              data-precio-impreso="78000"
+              data-precio-digital="45000"
+            >
+              <figure class="pos-book-figure">
+                <img
+                  src="https://placehold.co/600x450/27272a/facc15?text=Calculo+Multivariable+UPTC"
+                  alt="Portada del libro Cálculo Multivariable y Análisis Vectorial"
+                  referrerpolicy="no-referrer"
+                  class="pos-book-img"
+                />
+              </figure>
+              <div class="pos-book-body">
+                <small class="pos-book-meta">Autor: Dr. Gustavo Adolfo Pérez · Facultad de Ciencias</small>
+                <h3 class="pos-book-title">Cálculo Multivariable y Análisis Vectorial</h3>
+                <p class="pos-book-desc">
+                  Obra de referencia con problemas aplicados a la física e ingeniería, integrales múltiples y teoremas clásicos explicados paso a paso para estudiantes de pregrado.
+                </p>
+                <footer class="pos-book-footer">
+                  <data value="78000" class="pos-book-price">
+                    <span class="pos-book-amount">$78.000 COP</span>
+                    <small class="pos-book-format">Edición Impresa</small>
+                  </data>
+                  <button type="button" class="pos-add-btn">Agregar al carrito</button>
+                </footer>
+              </div>
+            </article>
+          </li>
+
+          <!-- Tarjeta 2 -->
+          <li class="pos-book-item">
+            <article
+              class="pos-book-card"
+              data-titulo="Arquitectura de Software y Sistemas POS"
+              data-precio-impreso="86000"
+              data-precio-digital="52000"
+            >
+              <figure class="pos-book-figure">
+                <img
+                  src="https://placehold.co/600x450/1e293b/facc15?text=Arquitectura+de+Software"
+                  alt="Portada del libro Arquitectura de Software y Sistemas POS"
+                  referrerpolicy="no-referrer"
+                  class="pos-book-img"
+                />
+              </figure>
+              <div class="pos-book-body">
+                <small class="pos-book-meta">Autora: Ing. Diana Carolina Rojas · Facultad de Ingeniería</small>
+                <h3 class="pos-book-title">Arquitectura de Software y Sistemas POS</h3>
+                <p class="pos-book-desc">
+                  Guía práctica sobre diseño de sistemas transaccionales, patrones limpios, microservicios y comercio electrónico orientados a puntos de venta modernos.
+                </p>
+                <footer class="pos-book-footer">
+                  <data value="86000" class="pos-book-price">
+                    <span class="pos-book-amount">$86.000 COP</span>
+                    <small class="pos-book-format">Edición Impresa</small>
+                  </data>
+                  <button type="button" class="pos-add-btn">Agregar al carrito</button>
+                </footer>
+              </div>
+            </article>
+          </li>
+
+          <!-- Tarjeta 3 -->
+          <li class="pos-book-item">
+            <article
+              class="pos-book-card"
+              data-titulo="Historia y Patrimonio Educativo de Boyacá"
+              data-precio-impreso="64000"
+              data-precio-digital="36000"
+            >
+              <figure class="pos-book-figure">
+                <img
+                  src="https://placehold.co/600x450/3f2e21/facc15?text=Historia+y+Patrimonio+Boyaca"
+                  alt="Portada del libro Historia y Patrimonio Educativo de Boyacá"
+                  referrerpolicy="no-referrer"
+                  class="pos-book-img"
+                />
+              </figure>
+              <div class="pos-book-body">
+                <small class="pos-book-meta">Autor: Dr. Javier Ocampo López · Ciencias de la Educación</small>
+                <h3 class="pos-book-title">Historia y Patrimonio Educativo de Boyacá</h3>
+                <p class="pos-book-desc">
+                  Recorrido documental por los orígenes de la educación pública universitaria en Tunja y el legado histórico de la Universidad Pedagógica y Tecnológica de Colombia.
+                </p>
+                <footer class="pos-book-footer">
+                  <data value="64000" class="pos-book-price">
+                    <span class="pos-book-amount">$64.000 COP</span>
+                    <small class="pos-book-format">Edición Impresa</small>
+                  </data>
+                  <button type="button" class="pos-add-btn">Agregar al carrito</button>
+                </footer>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <!-- Modal nativo del Punto de Venta para confirmar libros agregados al carrito -->
+    <dialog id="modal-pos" class="pos-modal">
+      <h3 class="pos-modal-title">Orden en Terminal POS UPTC</h3>
+      <p id="mensaje-modal" class="pos-modal-desc">Resumen de ejemplares seleccionados en el punto de venta:</p>
+      <table class="pos-modal-table">
+        <thead>
+          <tr>
+            <th class="pos-modal-th">Libro / Formato</th>
+            <th class="pos-modal-th pos-modal-th-right">Precio</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-carrito">
+          <tr>
+            <td colspan="2" class="pos-modal-td">Aún no has agregado libros al carrito.</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th class="pos-modal-th">Total a pagar en caja</th>
+            <th id="total-carrito" class="pos-modal-th pos-modal-th-right">$0 COP</th>
+          </tr>
+        </tfoot>
+      </table>
+      <menu class="pos-modal-actions">
+        <li><button type="button" id="btn-vaciar" class="pos-modal-btn">Vaciar</button></li>
+        <li><button type="button" id="btn-cerrar-modal" class="pos-modal-btn pos-modal-btn-primary">Continuar viendo</button></li>
+      </menu>
+    </dialog>
+
+    <!-- 4. Footer con datos de contacto y textos dinámicos inyectados con textContent -->
+    <footer id="contactos" class="pos-footer">
+      <section class="pos-footer-grid">
+        <div>
+          <h4 class="pos-footer-heading">POS Campus Sales · Librería UPTC</h4>
+          <p class="pos-footer-text">
+            Punto de venta oficial de textos universitarios, publicaciones seriadas y artículos académicos de la Universidad Pedagógica y Tecnológica de Colombia.
+          </p>
+        </div>
+        <div>
+          <h4 class="pos-footer-heading">Ubicación y Contacto Directo</h4>
+          <address class="pos-footer-address">
+            Avenida Central del Norte 39-115, Primer Piso Edificio Administrativo<br />
+            Ciudad Universitaria, Tunja - Boyacá, Colombia<br />
+            Teléfono PBX: (608) 740 5626 Ext. 2410<br />
+            Correo: <a href="mailto:libreria.pos@uptc.edu.co" class="pos-footer-link">libreria.pos@uptc.edu.co</a>
+          </address>
+        </div>
+        <div>
+          <h4 class="pos-footer-heading">Horario Punto de Venta</h4>
+          <p class="pos-footer-text">
+            Lunes a Viernes: 8:00 a.m. – 12:30 p.m. y 2:00 p.m. – 6:00 p.m.<br />
+            Sábados de posgrado: 8:00 a.m. – 1:00 p.m.<br />
+            Pagos con tarjeta débito, crédito, PSE y código QR institucional.
+          </p>
+        </div>
+      </section>
+
+      <small class="pos-footer-legal">
+        <span id="footer-derechos"></span>
+        <span id="footer-promocion"></span>
+      </small>
+    </footer>
+
+    <!-- Vanilla JavaScript aislado (IIFE) con manipulación del DOM mediante textContent -->
+    <script>
+      (function () {
+        "use strict";
+
+        // Defensa activa del DOM: bloquea y purga nodos inyectados externamente en <main> (ej. main.prepend(section))
+        var contenedorMain = document.querySelector(".pos-main");
+        var seccionesLegitimas = ["inicio", "libros"];
+
+        function esNodoAutorizado(nodo) {
+          if (nodo.nodeType !== 1) return true;
+          var id = nodo.getAttribute("id") || "";
+          var tieneClasePos =
+            nodo.classList &&
+            (nodo.classList.contains("pos-hero") ||
+              nodo.classList.contains("pos-catalog"));
+          return tieneClasePos && seccionesLegitimas.indexOf(id) !== -1;
+        }
+
+        if (contenedorMain) {
+          Array.prototype.slice
+            .call(contenedorMain.children)
+            .forEach(function (hijo) {
+              if (!esNodoAutorizado(hijo)) {
+                contenedorMain.removeChild(hijo);
+              }
+            });
+
+          var observadorIntegridad = new MutationObserver(function (mutaciones) {
+            mutaciones.forEach(function (mutacion) {
+              Array.prototype.slice
+                .call(mutacion.addedNodes)
+                .forEach(function (nodoAgregado) {
+                  if (
+                    nodoAgregado.nodeType === 1 &&
+                    !esNodoAutorizado(nodoAgregado) &&
+                    nodoAgregado.parentNode === contenedorMain
+                  ) {
+                    contenedorMain.removeChild(nodoAgregado);
+                  }
+                });
+            });
+          });
+
+          observadorIntegridad.observe(contenedorMain, { childList: true });
+        }
+
+        var anioActual = new Date().getFullYear();
+
+        // 1. Reemplazo de document.write() por manipulación del DOM con textContent
+        var bannerPromocion = document.getElementById("banner-promocion");
+        var footerDerechos = document.getElementById("footer-derechos");
+        var footerPromocion = document.getElementById("footer-promocion");
+
+        if (bannerPromocion) {
+          bannerPromocion.textContent =
+            "Promoción Especial Campus UPTC " +
+            anioActual +
+            ": 20% de descuento presentando carnet estudiantil o docente activo en compras de ediciones académicas.";
+        }
+
+        if (footerDerechos) {
+          footerDerechos.textContent =
+            "© " +
+            anioActual +
+            " POS Campus Sales UPTC — Todos los derechos reservados.";
+        }
+
+        if (footerPromocion) {
+          footerPromocion.textContent =
+            "Promoción vigente " +
+            anioActual +
+            ": Envío digital inmediato sin recargo y 20% dto. con carnet UPTC.";
+        }
+
+        // Estado e interactividad de Pestañas (Tabs) y Carrito POS
+        var formatoActual = "impreso";
+        var carrito = [];
+
+        var botonesTab = document.querySelectorAll(".pos-tab");
+        var estadoPestana = document.getElementById("estado-pestana");
+        var articulosLibros = document.querySelectorAll(".pos-book-card");
+        var contadorCarrito = document.getElementById("contador-carrito");
+        var btnVerCarrito = document.getElementById("btn-ver-carrito");
+        var modalPos = document.getElementById("modal-pos");
+        var tablaCarrito = document.getElementById("tabla-carrito");
+        var totalCarrito = document.getElementById("total-carrito");
+        var btnCerrarModal = document.getElementById("btn-cerrar-modal");
+        var btnVaciar = document.getElementById("btn-vaciar");
+
+        function formatearMoneda(valor) {
+          var numero = parseInt(valor, 10) || 0;
+          return "$" + numero.toLocaleString("es-CO") + " COP";
+        }
+
+        function cambiarPestanaFormato(nuevoFormato) {
+          formatoActual = nuevoFormato;
+
+          botonesTab.forEach(function (boton) {
+            var esActivo = boton.getAttribute("data-formato") === nuevoFormato;
+            boton.setAttribute("aria-selected", esActivo ? "true" : "false");
+          });
+
+          if (nuevoFormato === "impreso") {
+            estadoPestana.textContent =
+              "Mostrando tarifas de Edición Impresa (Empastado rústico editorial · Retiro inmediato en caja POS UPTC).";
+          } else {
+            estadoPestana.textContent =
+              "Mostrando tarifas de Edición Digital (eBook PDF/ePub) (Acceso inmediato con correo institucional @uptc.edu.co).";
+          }
+
+          articulosLibros.forEach(function (articulo) {
+            var precio =
+              nuevoFormato === "impreso"
+                ? articulo.getAttribute("data-precio-impreso")
+                : articulo.getAttribute("data-precio-digital");
+
+            var elementoData = articulo.querySelector(".pos-book-price");
+            var spanPrecio = articulo.querySelector(".pos-book-amount");
+            var etiquetaFormato = articulo.querySelector(".pos-book-format");
+
+            elementoData.setAttribute("value", precio);
+            spanPrecio.textContent = formatearMoneda(precio);
+            etiquetaFormato.textContent =
+              nuevoFormato === "impreso"
+                ? "Edición Impresa"
+                : "Licencia Digital";
+          });
+        }
+
+        function actualizarVistaCarrito() {
+          contadorCarrito.textContent = String(carrito.length);
+          tablaCarrito.textContent = "";
+
+          if (carrito.length === 0) {
+            var filaVacia = document.createElement("tr");
+            var celdaVacia = document.createElement("td");
+            celdaVacia.setAttribute("colspan", "2");
+            celdaVacia.className = "pos-modal-td";
+            celdaVacia.textContent = "Aún no has agregado libros al carrito.";
+            filaVacia.appendChild(celdaVacia);
+            tablaCarrito.appendChild(filaVacia);
+            totalCarrito.textContent = "$0 COP";
+            return;
+          }
+
+          var sumaTotal = 0;
+
+          carrito.forEach(function (item) {
+            sumaTotal += item.precio;
+
+            var fila = document.createElement("tr");
+
+            var celdaTitulo = document.createElement("td");
+            celdaTitulo.className = "pos-modal-td";
+            celdaTitulo.textContent = item.titulo + " (" + item.modalidad + ")";
+
+            var celdaPrecio = document.createElement("td");
+            celdaPrecio.className = "pos-modal-td pos-modal-td-right";
+            celdaPrecio.textContent = formatearMoneda(item.precio);
+
+            fila.appendChild(celdaTitulo);
+            fila.appendChild(celdaPrecio);
+            tablaCarrito.appendChild(fila);
+          });
+
+          totalCarrito.textContent = formatearMoneda(sumaTotal);
+        }
+
+        botonesTab.forEach(function (boton) {
+          boton.addEventListener("click", function () {
+            var formatoSeleccionado = boton.getAttribute("data-formato");
+            cambiarPestanaFormato(formatoSeleccionado);
+          });
+        });
+
+        articulosLibros.forEach(function (articulo) {
+          var botonAgregar = articulo.querySelector(".pos-add-btn");
+          botonAgregar.addEventListener("click", function () {
+            var titulo = articulo.getAttribute("data-titulo");
+            var precioActual =
+              formatoActual === "impreso"
+                ? parseInt(articulo.getAttribute("data-precio-impreso"), 10)
+                : parseInt(articulo.getAttribute("data-precio-digital"), 10);
+            var modalidadTexto =
+              formatoActual === "impreso" ? "Impreso" : "Digital";
+
+            carrito.push({
+              titulo: titulo,
+              precio: precioActual,
+              modalidad: modalidadTexto,
+            });
+
+            actualizarVistaCarrito();
+
+            var textoOriginal = "Agregar al carrito";
+            botonAgregar.textContent = "Agregado ✓";
+            setTimeout(function () {
+              botonAgregar.textContent = textoOriginal;
+            }, 900);
+          });
+        });
+
+        btnVerCarrito.addEventListener("click", function () {
+          actualizarVistaCarrito();
+          if (typeof modalPos.showModal === "function") {
+            modalPos.showModal();
+          }
+        });
+
+        btnCerrarModal.addEventListener("click", function () {
+          modalPos.close();
+        });
+
+        btnVaciar.addEventListener("click", function () {
+          carrito = [];
+          actualizarVistaCarrito();
+        });
+      })();
+    </script>
+  </body>
+</html>
+
+
